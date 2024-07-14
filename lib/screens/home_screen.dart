@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:traveler_town/widgets/home_app_bar.dart';
+import 'package:traveler_town/widgets/banner_slide_widget.dart';
+import 'package:traveler_town/widgets/home_app_bar_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,7 +20,10 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: const Column(
-        children: [],
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          ImageCarousel(),
+        ],
       ),
     );
   }
