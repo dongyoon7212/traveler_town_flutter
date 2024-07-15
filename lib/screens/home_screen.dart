@@ -9,10 +9,11 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   final Future<List<BoardModel>> togetherBoardList =
-      BoardApiService.getBoards(3);
-  final Future<List<BoardModel>> travelBoardList = BoardApiService.getBoards(2);
+      BoardApiService.getSortedBoardsByBoardCategoryId(3);
+  final Future<List<BoardModel>> travelBoardList =
+      BoardApiService.getSortedBoardsByBoardCategoryId(2);
   final Future<List<BoardModel>> restaurantBoardList =
-      BoardApiService.getBoards(1);
+      BoardApiService.getSortedBoardsByBoardCategoryId(1);
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const HomeAppBar(),
         backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         foregroundColor: const Color.fromRGBO(22, 68, 113, 1),
         shape: const Border(
           bottom: BorderSide(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traveler_town/models/board_model.dart';
-import 'package:traveler_town/widgets/home_board_slide.dart';
+import 'package:traveler_town/widgets/home_board_card.dart';
 
 class BoardFutureBuilder extends StatelessWidget {
   const BoardFutureBuilder({

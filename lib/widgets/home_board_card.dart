@@ -2,6 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:traveler_town/models/board_model.dart';
 
 ListView makeList(AsyncSnapshot<List<BoardModel>> snapshot) {
+  String getTimeDifference(String dateString) {
+    final date = DateTime.parse(dateString);
+    final now = DateTime.now();
+    final differenceInMilliseconds = now.difference(date).inMilliseconds;
+    final differenceInMinutes =
+        (differenceInMilliseconds / (1000 * 60)).floor();
+
+    if (differenceInMinutes < 1) {
+      return "방금";
+    } else if (differenceInMinutes < 60) {
+      return "$differenceInMinutes분 전";
+    } else if (differenceInMinutes < 1440) {
+      final differenceInHours = (differenceInMinutes / 60).floor();
+      return "$differenceInHours시간 전";
+    } else {
+      final differenceInDays = (differenceInMinutes / 1440).floor();
+      return "$differenceInDays일 전";
+    }
+  }
+
   return ListView.separated(
     scrollDirection: Axis.horizontal,
     itemCount: snapshot.data!.length,
@@ -27,24 +47,39 @@ ListView makeList(AsyncSnapshot<List<BoardModel>> snapshot) {
               SizedBox(
                 height: 50,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Container(
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Container(
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: SizedBox(
+                              width: 30,
+                              child: Image.network(board.profileImg),
+                            ),
+                          ),
                         ),
-                        child: SizedBox(
-                          width: 30,
-                          child: Image.network(board.profileImg),
+                        Text(
+                          board.nickname,
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Text(
+                        getTimeDifference(board.createDate),
+                        style: const TextStyle(
+                          color: Color(0xff9a9a9a),
+                          fontSize: 12,
                         ),
                       ),
-                    ),
-                    Text(
-                      board.nickname,
-                      style: const TextStyle(fontSize: 14),
-                    ),
+                    )
                   ],
                 ),
               ),

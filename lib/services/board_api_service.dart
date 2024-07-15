@@ -13,7 +13,8 @@ class BoardApiService {
   };
   static const String getBoardAll = "/board/all";
 
-  static Future<List<BoardModel>> getBoards(boardCategoryId) async {
+  static Future<List<BoardModel>> getSortedBoardsByBoardCategoryId(
+      boardCategoryId) async {
     List<BoardModel> boardInstances = [];
     final queryParameters = {
       'boardCategoryId': boardCategoryId.toString(),
@@ -22,10 +23,12 @@ class BoardApiService {
     final response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       final List<dynamic> boards = jsonDecode(utf8.decode(response.bodyBytes));
+
       for (var board in boards) {
         boardInstances.add(BoardModel.fromJson(board));
       }
-      return boardInstances;
+      boardInstances.sort((a, b) => b.createDate.compareTo(a.createDate));
+      return boardInstances.take(6).toList();
     }
     throw Exception('Failed to load boards');
   }
