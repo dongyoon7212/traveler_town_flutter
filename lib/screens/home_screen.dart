@@ -12,10 +12,10 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const HomeAppBar(),
         backgroundColor: Colors.white,
+        foregroundColor: const Color.fromRGBO(22, 68, 113, 1),
         shape: const Border(
           bottom: BorderSide(
-            color: Colors.grey,
-            width: 0.5,
+            width: 0.1,
           ),
         ),
       ),
@@ -24,6 +24,37 @@ class HomeScreen extends StatelessWidget {
         children: [
           ImageCarousel(),
         ],
+      ),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              width: 0.1,
+            ),
+          ),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          fixedColor: const Color.fromRGBO(22, 68, 113, 1),
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home_filled,
+              ),
+              label: "HOME",
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.list,
+                ),
+                label: "CATEGORY"),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.person,
+                ),
+                label: "MYPAGE"),
+          ],
+        ),
       ),
     );
   }

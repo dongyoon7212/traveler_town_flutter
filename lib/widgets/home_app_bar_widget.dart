@@ -12,7 +12,7 @@ class HomeAppBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          width: 50,
+          width: 45,
           child: Image.asset(
             "assets/logo.png",
             fit: BoxFit.cover,
