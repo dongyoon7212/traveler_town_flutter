@@ -1,9 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:traveler_town/models/board_model.dart';
+import 'package:traveler_town/services/board_api_service.dart';
 import 'package:traveler_town/widgets/banner_slide_widget.dart';
 import 'package:traveler_town/widgets/home_app_bar_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final Future<List<BoardModel>> boardList = BoardApiService.getBoards();
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +25,39 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: const Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          ImageCarousel(),
+          const ImageCarousel(),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+            ),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                children: [
+                  const Text(
+                    "최신 동행 포스트",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Container(
+                      // child: ListView.separated(
+                      //   separatorBuilder: (context, index) =>
+                      //       const SizedBox(width: 40),
+                      //   itemCount: 10,
+                      //   itemBuilder: (context, index) {
+                      //     return null;
+                      //   },
+                      // ),
+                      )
+                ],
+              ),
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: Container(

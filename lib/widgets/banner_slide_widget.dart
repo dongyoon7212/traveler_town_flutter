@@ -32,7 +32,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(20),
       child: Container(
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
