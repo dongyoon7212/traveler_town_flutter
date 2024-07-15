@@ -1,15 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:traveler_town/models/board_model.dart';
 import 'package:traveler_town/services/board_api_service.dart';
 import 'package:traveler_town/widgets/banner_slide_widget.dart';
+import 'package:traveler_town/widgets/future_board_slide.dart';
 import 'package:traveler_town/widgets/home_app_bar_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  final Future<List<BoardModel>> boardList = BoardApiService.getBoards();
+  final Future<List<BoardModel>> togetherBoardList =
+      BoardApiService.getBoards(3);
+  final Future<List<BoardModel>> travelBoardList = BoardApiService.getBoards(2);
+  final Future<List<BoardModel>> restaurantBoardList =
+      BoardApiService.getBoards(1);
 
   @override
   Widget build(BuildContext context) {
@@ -25,40 +28,48 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const ImageCarousel(),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
-            child: Container(
-              alignment: Alignment.centerLeft,
-              child: Column(
-                children: [
-                  const Text(
-                    "최신 동행 포스트",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const ImageCarousel(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "최신 동행 포스트",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  Container(
-                      // child: ListView.separated(
-                      //   separatorBuilder: (context, index) =>
-                      //       const SizedBox(width: 40),
-                      //   itemCount: 10,
-                      //   itemBuilder: (context, index) {
-                      //     return null;
-                      //   },
-                      // ),
-                      )
-                ],
+                    BoardFutureBuilder(boardList: togetherBoardList),
+                    const Text(
+                      "최신 여행지 포스트",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    BoardFutureBuilder(boardList: travelBoardList),
+                    const Text(
+                      "최신 맛집 포스트",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    BoardFutureBuilder(boardList: restaurantBoardList),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(

@@ -4,9 +4,7 @@ import 'package:traveler_town/models/board_model.dart';
 
 class BoardApiService {
   static const String baseUrl = "localhost:8080";
-  static const queryParameters = {
-    'boardCategoryId': '3',
-  };
+
   static Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -15,19 +13,19 @@ class BoardApiService {
   };
   static const String getBoardAll = "/board/all";
 
-  static Future<List<BoardModel>> getBoards() async {
+  static Future<List<BoardModel>> getBoards(boardCategoryId) async {
     List<BoardModel> boardInstances = [];
+    final queryParameters = {
+      'boardCategoryId': boardCategoryId.toString(),
+    };
     final url = Uri.http(baseUrl, getBoardAll, queryParameters);
     final response = await http.get(url, headers: requestHeaders);
-    print(utf8.decode(response.bodyBytes));
     if (response.statusCode == 200) {
-      final List<dynamic> boards = jsonDecode(response.body);
+      final List<dynamic> boards = jsonDecode(utf8.decode(response.bodyBytes));
       for (var board in boards) {
         boardInstances.add(BoardModel.fromJson(board));
       }
       return boardInstances;
-    } else {
-      print("error");
     }
     throw Exception('Failed to load boards');
   }
