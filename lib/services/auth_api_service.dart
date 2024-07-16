@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:traveler_town/models/principal_model.dart';
 
 class AuthApiService {
   static const _storage = FlutterSecureStorage();
@@ -52,8 +53,23 @@ class AuthApiService {
   static Future<Map<String, String>> getHeaders() async {
     final token = await getToken();
     return {
-      ..._baseHeaders,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
       if (token != null) 'Authorization': 'Bearer $token',
     };
+  }
+
+  static Future<PrincipalModel> getPrincipal() async {
+    final headers = await getHeaders();
+    final response = await http.get(
+      Uri.parse('http://localhost:8080/account/principal'),
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      final principal = PrincipalModel.fromJson(jsonDecode(response.body));
+      return principal;
+    } else {
+      throw Exception('Failed to get principal: ${response.reasonPhrase}');
+    }
   }
 }

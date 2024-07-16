@@ -6,9 +6,8 @@ class HomeAppBar extends StatelessWidget {
     super.key,
   });
 
-  void printToken() async {
-    String? token = await AuthApiService.getToken();
-    print("토큰이 있습니다: $token");
+  void printPrincipal() {
+    print(AuthApiService.getPrincipal());
   }
 
   @override
@@ -83,8 +82,7 @@ class HomeAppBar extends StatelessWidget {
         ),
         IconButton(
           onPressed: () {
-            AuthApiService.deleteToken();
-            printToken();
+            printPrincipal();
           },
           icon: const Icon(
             Icons.bookmark_border_outlined,
