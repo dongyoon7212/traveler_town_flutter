@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:traveler_town/models/board_model.dart';
-import 'package:traveler_town/services/board_api_service.dart';
-import 'package:traveler_town/widgets/banner_slide_widget.dart';
-import 'package:traveler_town/widgets/future_board_slide.dart';
+import 'package:traveler_town/screens/signin_screen.dart';
 import 'package:traveler_town/widgets/home_app_bar_widget.dart';
+import 'package:traveler_town/widgets/home_body_widget.dart';
+import 'package:traveler_town/screens/restaurant_screen.dart';
+import 'package:traveler_town/screens/together_screen.dart';
+import 'package:traveler_town/screens/travel_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
-  final Future<List<BoardModel>> togetherBoardList =
-      BoardApiService.getSortedBoardsByBoardCategoryId(3);
-  final Future<List<BoardModel>> travelBoardList =
-      BoardApiService.getSortedBoardsByBoardCategoryId(2);
-  final Future<List<BoardModel>> restaurantBoardList =
-      BoardApiService.getSortedBoardsByBoardCategoryId(1);
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final List<Widget> _widgetOption = <Widget>[
+    HomeBody(),
+    const Together(),
+    const Travel(),
+    const Restaurant(),
+    const SignIn(),
+  ];
+
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,48 +45,8 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const ImageCarousel(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "최신 동행 포스트",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    BoardFutureBuilder(boardList: togetherBoardList),
-                    const Text(
-                      "최신 여행지 포스트",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    BoardFutureBuilder(boardList: travelBoardList),
-                    const Text(
-                      "최신 맛집 포스트",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    BoardFutureBuilder(boardList: restaurantBoardList),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+      body: SafeArea(
+        child: _widgetOption.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
@@ -82,25 +57,43 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
           fixedColor: const Color.fromRGBO(22, 68, 113, 1),
+          showUnselectedLabels: true,
+          unselectedItemColor: Colors.black,
+          selectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
+          currentIndex: _selectedIndex, // 지정 인덱스로 이동
+          onTap: _onItemTapped,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home_filled,
               ),
-              label: "HOME",
+              label: "홈",
             ),
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.list,
+                  Icons.people,
                 ),
-                label: "CATEGORY"),
+                label: "동행"),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.wallet_travel,
+                ),
+                label: "여행지"),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.restaurant,
+                ),
+                label: "맛집"),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.person,
                 ),
-                label: "MYPAGE"),
+                label: "마이페이지"),
           ],
         ),
       ),
