@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:traveler_town/services/auth_api_service.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
     super.key,
   });
+
+  void printToken() async {
+    String? token = await AuthApiService.getToken();
+    print("토큰이 있습니다: $token");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +82,10 @@ class HomeAppBar extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            AuthApiService.deleteToken();
+            printToken();
+          },
           icon: const Icon(
             Icons.bookmark_border_outlined,
             size: 30,

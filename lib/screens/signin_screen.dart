@@ -195,7 +195,7 @@ class __FormContentState extends State<_FormContent> {
                     try {
                       String token = await AuthApiService.signin(
                           usernameController.text, passwordController.text);
-                      await AuthApiService().saveToken(token);
+                      await AuthApiService.saveToken(token);
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
