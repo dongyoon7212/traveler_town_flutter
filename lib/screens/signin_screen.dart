@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:traveler_town/screens/home_screen.dart';
 import 'package:traveler_town/screens/signup_screen.dart';
+import 'package:traveler_town/services/auth_api_service.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});
@@ -69,6 +71,9 @@ class __FormContentState extends State<_FormContent> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -80,6 +85,7 @@ class __FormContentState extends State<_FormContent> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
+              controller: usernameController,
               validator: (value) {
                 // add email validation
                 if (value == null || value.isEmpty) {
@@ -113,6 +119,7 @@ class __FormContentState extends State<_FormContent> {
             ),
             _gap(),
             TextFormField(
+              controller: passwordController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return '아이디를 확인해 주세요.';
@@ -183,8 +190,27 @@ class __FormContentState extends State<_FormContent> {
                         color: Colors.white),
                   ),
                 ),
-                onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {}
+                onPressed: () async {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    try {
+                      String token = await AuthApiService.signin(
+                          usernameController.text, passwordController.text);
+                      await AuthApiService().saveToken(token);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ),
+                      );
+                    } catch (e) {
+                      // 로그인 실패 시 에러 처리
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('로그인 실패: $e'),
+                        ),
+                      );
+                    }
+                  }
                 },
               ),
             ),
