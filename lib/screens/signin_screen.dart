@@ -184,9 +184,7 @@ class __FormContentState extends State<_FormContent> {
                   ),
                 ),
                 onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    /// do something
-                  }
+                  if (_formKey.currentState?.validate() ?? false) {}
                 },
               ),
             ),
