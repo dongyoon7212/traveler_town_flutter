@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:traveler_town/screens/mypage_screen.dart';
 import 'package:traveler_town/screens/signin_screen.dart';
+import 'package:traveler_town/services/auth_api_service.dart';
 import 'package:traveler_town/widgets/home_app_bar_widget.dart';
 import 'package:traveler_town/widgets/home_body_widget.dart';
 import 'package:traveler_town/screens/restaurant_screen.dart';
@@ -19,15 +21,34 @@ class _HomeScreenState extends State<HomeScreen> {
     const Together(),
     const Travel(),
     const Restaurant(),
-    const SignIn(),
+    const Mypage(),
   ];
 
   int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void _onItemTapped(int index) async {
+    if (index == 4) {
+      // "마이페이지" 아이템이 선택된 경우
+      try {
+        // 사용자 정보 가져오기 시도
+        await AuthApiService.getPrincipal();
+        // 사용자 정보가 있으면 마이페이지로 이동
+        setState(() {
+          _selectedIndex = index;
+        });
+      } catch (e) {
+        // 사용자 정보가 없으면(인증되지 않음) SigninScreen으로 이동
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SignIn()),
+        );
+      }
+    } else {
+      // 다른 아이템이 선택된 경우 그냥 해당 화면으로 이동
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
