@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:traveler_town/screens/home_screen.dart';
 import 'package:traveler_town/screens/signup_screen.dart';
 import 'package:traveler_town/services/auth_api_service.dart';
+import 'package:traveler_town/widgets/home_body_widget.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});
@@ -196,17 +197,21 @@ class __FormContentState extends State<_FormContent> {
                       String token = await AuthApiService.signin(
                           usernameController.text, passwordController.text);
                       await AuthApiService.saveToken(token);
-                      Navigator.pushReplacement(
+
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
+                          builder: (context) {
+                            return const HomeScreen();
+                          },
                         ),
+                        (route) => false,
                       );
                     } catch (e) {
                       // 로그인 실패 시 에러 처리
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('로그인 실패: $e'),
+                        const SnackBar(
+                          content: Text('사용자 정보를 확인해 주세요!'),
                         ),
                       );
                     }
