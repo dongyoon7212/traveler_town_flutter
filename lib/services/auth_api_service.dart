@@ -66,7 +66,8 @@ class AuthApiService {
       headers: headers,
     );
     if (response.statusCode == 200) {
-      final principal = PrincipalModel.fromJson(jsonDecode(response.body));
+      final utf8DecodedBody = utf8.decode(response.bodyBytes);
+      final principal = PrincipalModel.fromJson(jsonDecode(utf8DecodedBody));
       return principal;
     } else {
       throw Exception('Failed to get principal: ${response.reasonPhrase}');

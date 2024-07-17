@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:traveler_town/models/principal_model.dart';
 import 'package:traveler_town/services/auth_api_service.dart';
 
 class HomeAppBar extends StatelessWidget {
@@ -6,8 +7,20 @@ class HomeAppBar extends StatelessWidget {
     super.key,
   });
 
-  void printPrincipal() {
-    print(AuthApiService.getPrincipal());
+  void printPrincipal() async {
+    try {
+      PrincipalModel principal = await AuthApiService.getPrincipal();
+      print('User ID: ${principal.userId}');
+      print('Username: ${principal.username}');
+      print('Nickname: ${principal.nickname}');
+      print('Email: ${principal.email}');
+      print('Sex: ${principal.sex}');
+      print('Age: ${principal.age}');
+      print('Profile Image: ${principal.profileImg}');
+      print('Authorities: ${principal.authorities.join(', ')}');
+    } catch (e) {
+      print('Failed to get principal: $e');
+    }
   }
 
   @override
