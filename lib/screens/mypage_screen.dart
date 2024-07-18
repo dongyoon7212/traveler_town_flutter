@@ -30,12 +30,13 @@ class Mypage extends StatelessWidget {
           PrincipalModel principalModel = snapshot.data!;
           return Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
                   width: 150,
                   child: Container(
                     clipBehavior: Clip.hardEdge,
+                    margin: const EdgeInsets.fromLTRB(0, 50, 0, 30),
                     decoration: BoxDecoration(
                       border: Border.all(
                         width: 1,
@@ -48,10 +49,56 @@ class Mypage extends StatelessWidget {
                     ),
                   ),
                 ),
-                _gap(),
+                _gap(0, 16),
                 Text(
                   principalModel.nickname,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      principalModel.email,
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    _gap(10, 10),
+                    const Icon(
+                      Icons.check_circle,
+                      size: 20,
+                      color: Color.fromRGBO(0, 128, 0, 1),
+                    )
+                  ],
+                ),
+                _gap(0, 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "성별 : ${principalModel.sex == 1 ? "남" : "여"}",
+                    ),
+                    _gap(50, 0),
+                    Text("나이 : ${principalModel.age}대")
+                  ],
+                ),
+                _gap(0, 50),
+                Column(
+                  children: [
+                    mypageMenuBar(
+                      "내 정보 수정",
+                      const Icon(Icons.edit),
+                    ),
+                    mypageMenuBar(
+                      "로그아웃",
+                      const Icon(Icons.logout),
+                    ),
+                  ],
+                )
               ],
             ),
           );
@@ -60,5 +107,43 @@ class Mypage extends StatelessWidget {
     );
   }
 
-  Widget _gap() => const SizedBox(height: 16);
+  Row mypageMenuBar(String title, Icon icon) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: ListTile(
+            minVerticalPadding: 15,
+            tileColor: Colors.grey,
+            title: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    icon,
+                    _gap(7, 0),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _gap(double width, double height) => SizedBox(
+        width: width,
+        height: height,
+      );
 }
