@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traveler_town/models/principal_model.dart';
+import 'package:traveler_town/screens/home_screen.dart';
 import 'package:traveler_town/services/auth_api_service.dart';
 
 class Mypage extends StatelessWidget {
@@ -7,6 +8,13 @@ class Mypage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void logout() {
+      AuthApiService.deleteToken();
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
+      ));
+    }
+
     return FutureBuilder<PrincipalModel>(
       future: AuthApiService.getPrincipal(),
       builder: (context, snapshot) {
@@ -95,14 +103,8 @@ class Mypage extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      mypageMenuBar(
-                        "내 정보 수정",
-                        const Icon(Icons.edit),
-                      ),
-                      mypageMenuBar(
-                        "로그아웃",
-                        const Icon(Icons.logout),
-                      ),
+                      mypageMenuBar("내 정보 수정", const Icon(Icons.edit), () {}),
+                      mypageMenuBar("로그아웃", const Icon(Icons.logout), logout),
                     ],
                   ),
                 )
@@ -114,14 +116,14 @@ class Mypage extends StatelessWidget {
     );
   }
 
-  Row mypageMenuBar(String title, Icon icon) {
+  Row mypageMenuBar(String title, Icon icon, VoidCallback onTap) {
     return Row(
       children: [
         Expanded(
           flex: 1,
           child: ListTile(
             minVerticalPadding: 15,
-            // tileColor: Colors.grey,
+            onTap: onTap,
             shape: const Border(
               bottom: BorderSide(
                 width: 1,

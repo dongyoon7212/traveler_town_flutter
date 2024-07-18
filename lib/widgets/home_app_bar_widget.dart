@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:traveler_town/services/auth_api_service.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
@@ -77,9 +76,7 @@ class HomeAppBar extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: () {
-            AuthApiService.deleteToken();
-          },
+          onPressed: () {},
           icon: const Icon(
             Icons.bookmark_border_outlined,
             size: 30,
