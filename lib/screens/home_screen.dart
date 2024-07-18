@@ -24,6 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const Mypage(),
   ];
 
+  bool showAppBar = true;
+
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) async {
@@ -33,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // 사용자 정보 가져오기 시도
         await AuthApiService.getPrincipal();
         // 사용자 정보가 있으면 마이페이지로 이동
+        showAppBar = false;
         setState(() {
           _selectedIndex = index;
         });
@@ -44,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       }
     } else {
+      showAppBar = true;
       // 다른 아이템이 선택된 경우 그냥 해당 화면으로 이동
       setState(() {
         _selectedIndex = index;
@@ -55,17 +59,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const HomeAppBar(),
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        foregroundColor: const Color.fromRGBO(22, 68, 113, 1),
-        shape: const Border(
-          bottom: BorderSide(
-            width: 0.1,
-          ),
-        ),
-      ),
+      appBar: showAppBar
+          ? AppBar(
+              title: const HomeAppBar(),
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.white,
+              foregroundColor: const Color.fromRGBO(22, 68, 113, 1),
+              shape: const Border(
+                bottom: BorderSide(
+                  width: 0.1,
+                ),
+              ),
+            )
+          : null,
       body: SafeArea(
         child: _widgetOption.elementAt(_selectedIndex),
       ),

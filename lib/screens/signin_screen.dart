@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:traveler_town/screens/home_screen.dart';
 import 'package:traveler_town/screens/signup_screen.dart';
 import 'package:traveler_town/services/auth_api_service.dart';
-import 'package:traveler_town/widgets/home_body_widget.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});
