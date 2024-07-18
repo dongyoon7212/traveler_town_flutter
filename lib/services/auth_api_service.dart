@@ -73,4 +73,24 @@ class AuthApiService {
       throw Exception('Failed to get principal: ${response.reasonPhrase}');
     }
   }
+
+  static editSex(int sex) async {
+    final headers = await getHeaders();
+    final response = await http.put(
+        Uri.parse("http://localhost:8080/account/sex"),
+        body: jsonEncode(<String, int>{"sex": sex}),
+        headers: headers);
+
+    return response.body;
+  }
+
+  static editAge(int age) async {
+    final headers = await getHeaders();
+    final response = await http.put(
+        Uri.parse("http://localhost:8080/account/age"),
+        body: jsonEncode(<String, int>{"age": age}),
+        headers: headers);
+
+    return response.body;
+  }
 }
