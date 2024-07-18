@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:traveler_town/models/principal_model.dart';
+import 'package:traveler_town/screens/edit_mypage_screen.dart';
 import 'package:traveler_town/screens/home_screen.dart';
 import 'package:traveler_town/services/auth_api_service.dart';
 
@@ -103,8 +104,37 @@ class Mypage extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      mypageMenuBar("내 정보 수정", const Icon(Icons.edit), () {}),
-                      mypageMenuBar("로그아웃", const Icon(Icons.logout), logout),
+                      mypageMenuBar(
+                        const Icon(Icons.edit),
+                        () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EditMypageScreen(),
+                            ),
+                          );
+                        },
+                        const Hero(
+                          tag: "menu_title",
+                          child: Text(
+                            "내 정보 수정",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      mypageMenuBar(
+                          const Icon(Icons.logout),
+                          logout,
+                          const Text(
+                            "로그아웃",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                          )),
                     ],
                   ),
                 )
@@ -116,7 +146,7 @@ class Mypage extends StatelessWidget {
     );
   }
 
-  Row mypageMenuBar(String title, Icon icon, VoidCallback onTap) {
+  Row mypageMenuBar(Icon icon, VoidCallback onTap, Widget titleWidget) {
     return Row(
       children: [
         Expanded(
@@ -138,12 +168,7 @@ class Mypage extends StatelessWidget {
                   children: [
                     icon,
                     _gap(7, 0),
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
+                    titleWidget,
                   ],
                 ),
                 const Icon(
