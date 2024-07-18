@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:traveler_town/models/principal_model.dart';
+import 'package:traveler_town/services/auth_api_service.dart';
 
 class EditMypageScreen extends StatefulWidget {
   const EditMypageScreen({super.key});
@@ -8,7 +11,25 @@ class EditMypageScreen extends StatefulWidget {
 }
 
 class _EditMypageScreenState extends State<EditMypageScreen> {
-  int _sex = 0;
+  late int sex;
+  late int age;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPrincipalData();
+  }
+
+  Future<void> _loadPrincipalData() async {
+    PrincipalModel principalModel = await AuthApiService.getPrincipal();
+    setState(() {
+      sex = principalModel.sex;
+      age = principalModel.age;
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +37,7 @@ class _EditMypageScreenState extends State<EditMypageScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Hero(
-          tag: "menu_title",
+          tag: "menu_title_edit",
           child: Text(
             "내 정보 수정",
             style: TextStyle(
@@ -26,63 +47,102 @@ class _EditMypageScreenState extends State<EditMypageScreen> {
           ),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 30,
-            vertical: 50,
-          ),
-          child: Column(
-            children: [
-              const Row(
-                children: [
-                  Text(
-                    "성별",
-                    style: TextStyle(
-                      fontSize: 30,
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                  vertical: 50,
+                ),
+                child: Column(
+                  children: [
+                    DropdownButtonFormField<int?>(
+                      value: sex,
+                      dropdownColor: Colors.white,
+                      decoration: const InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(width: 1),
+                        ),
+                        labelText: '성별',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        labelStyle: TextStyle(
+                          fontSize: 30,
+                          color: Color(0xff333333),
+                        ),
+                      ),
+                      items: [0, 1, 2].map<DropdownMenuItem<int?>>((int? i) {
+                        return DropdownMenuItem<int?>(
+                          value: i,
+                          child: Text({1: '남성', 2: '여성'}[i] ?? '비공개'),
+                        );
+                      }).toList(),
+                      onChanged: (int? value) {
+                        setState(() {
+                          sex = value!;
+                        });
+                      },
                     ),
-                  ),
-                ],
-              ),
-              RadioListTile(
-                title: const Text("남자"),
-                value: 1,
-                groupValue: _sex,
-                onChanged: (int? value) {
-                  setState(() {
-                    _sex = value!;
-                    print("남자");
-                  });
-                },
-              ),
-              RadioListTile(
-                title: const Text("여자"),
-                value: 2,
-                groupValue: _sex,
-                onChanged: (int? value) {
-                  setState(() {
-                    _sex = value!;
-                    print("여자");
-                  });
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Row(
-                children: [
-                  Text(
-                    "나이",
-                    style: TextStyle(
-                      fontSize: 30,
+                    const SizedBox(
+                      height: 20,
                     ),
-                  ),
-                ],
+                    DropdownButtonFormField<int?>(
+                      value: age,
+                      dropdownColor: Colors.white,
+                      decoration: const InputDecoration(
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(width: 1),
+                        ),
+                        labelText: '나이대',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        labelStyle: TextStyle(
+                          fontSize: 30,
+                          color: Color(0xff333333),
+                        ),
+                      ),
+                      items: [10, 20, 30, 40, 50, 60, 70, 80, 90]
+                          .map<DropdownMenuItem<int?>>((int? i) {
+                        return DropdownMenuItem<int?>(
+                          value: i,
+                          child: Text({
+                                10: '10대',
+                                20: '20대',
+                                30: "30대",
+                                40: "40대",
+                                50: "50대",
+                                60: "60대",
+                                70: "70대",
+                                80: "80대",
+                                90: "90대",
+                              }[i] ??
+                              '비공개'),
+                        );
+                      }).toList(),
+                      onChanged: (int? value) {
+                        setState(() {
+                          age = value!;
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      height: 400,
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          print(sex);
+                          print(age);
+                        },
+                        icon: const Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Icon(
+                            Icons.check,
+                            size: 40,
+                          ),
+                        ))
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
