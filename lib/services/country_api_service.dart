@@ -34,6 +34,8 @@ class CountryApiService {
       for (var country in countries) {
         countryList.add(CountryModel.fromJson(country));
       }
+      countryList.sort((a, b) => a.countryNameKor.compareTo(b.countryNameKor));
+
       return countryList;
     } else {
       throw Exception('Failed to load boards');
