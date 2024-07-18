@@ -30,20 +30,46 @@ class _EditMypageScreenState extends State<EditMypageScreen> {
     });
   }
 
+  void editTap() async {
+    AuthApiService.editSex(sex);
+    AuthApiService.editAge(age);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('성공'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('정보가 변경되었습니다'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('확인'),
+              onPressed: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Hero(
-          tag: "menu_title_edit",
-          child: Text(
-            "내 정보 수정",
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.black,
-            ),
+        title: const Text(
+          "내 정보 수정",
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.black,
           ),
         ),
       ),
@@ -128,10 +154,7 @@ class _EditMypageScreenState extends State<EditMypageScreen> {
                       height: 400,
                     ),
                     IconButton(
-                        onPressed: () {
-                          print(sex);
-                          print(age);
-                        },
+                        onPressed: editTap,
                         icon: const Padding(
                           padding: EdgeInsets.all(10.0),
                           child: Icon(

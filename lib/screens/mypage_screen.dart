@@ -114,14 +114,11 @@ class Mypage extends StatelessWidget {
                             ),
                           );
                         },
-                        const Hero(
-                          tag: "menu_title",
-                          child: Text(
-                            "내 정보 수정",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                            ),
+                        const Text(
+                          "내 정보 수정",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
                           ),
                         ),
                       ),
