@@ -87,17 +87,24 @@ class Mypage extends StatelessWidget {
                   ],
                 ),
                 _gap(0, 50),
-                Column(
-                  children: [
-                    mypageMenuBar(
-                      "내 정보 수정",
-                      const Icon(Icons.edit),
+                Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(width: 0.5, color: Color(0xffdbdbdb)),
                     ),
-                    mypageMenuBar(
-                      "로그아웃",
-                      const Icon(Icons.logout),
-                    ),
-                  ],
+                  ),
+                  child: Column(
+                    children: [
+                      mypageMenuBar(
+                        "내 정보 수정",
+                        const Icon(Icons.edit),
+                      ),
+                      mypageMenuBar(
+                        "로그아웃",
+                        const Icon(Icons.logout),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
@@ -114,7 +121,13 @@ class Mypage extends StatelessWidget {
           flex: 1,
           child: ListTile(
             minVerticalPadding: 15,
-            tileColor: Colors.grey,
+            // tileColor: Colors.grey,
+            shape: const Border(
+              bottom: BorderSide(
+                width: 1,
+                color: Color(0xffdbdbdb),
+              ),
+            ),
             title: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
