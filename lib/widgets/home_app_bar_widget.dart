@@ -4,7 +4,12 @@ import 'package:traveler_town/screens/country_info_screen.dart';
 import 'package:traveler_town/services/country_api_service.dart';
 
 class HomeAppBar extends StatefulWidget {
-  const HomeAppBar({super.key});
+  const HomeAppBar({
+    super.key,
+    required this.onCountrySelected,
+  });
+
+  final Function(CountryModel) onCountrySelected;
 
   @override
   State<HomeAppBar> createState() => _HomeAppBarState();
@@ -28,6 +33,10 @@ class _HomeAppBarState extends State<HomeAppBar> {
     } catch (e) {
       print('Failed to load countries: $e');
     }
+  }
+
+  void _onCountrySelected(CountryModel country) {
+    widget.onCountrySelected(country);
   }
 
   @override
@@ -122,13 +131,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
               );
             },
             onSelected: (CountryModel selection) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      CountryInfoScreen(countryModel: selection),
-                ),
-              );
+              _onCountrySelected(selection);
             },
           ),
         ),
