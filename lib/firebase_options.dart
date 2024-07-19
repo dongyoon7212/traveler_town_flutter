@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -46,9 +47,14 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAH9NqHi22KYV8VRXcRCYJH5iPbo0ykWvw',
-    appId: '1:552170877326:web:77d256bf4759dd605e74df',
+  // String? appId = dotenv.env["firebaseAppId"];
+  // String? firebaseWebKey = dotenv.env["firebaseWebKey"];
+  // String? firebaseIosKey = dotenv.env["firebaseIosKey"];
+  // String? firebaseMacKey = dotenv.env["firebaseMacKey"];
+
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: dotenv.env["firebaseWebKey"]!,
+    appId: dotenv.env["firebaseAppId"]!,
     messagingSenderId: '552170877326',
     projectId: 'traveler-town',
     authDomain: 'traveler-town.firebaseapp.com',
@@ -56,18 +62,18 @@ class DefaultFirebaseOptions {
     measurementId: 'G-K99TGJ3V51',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCEGF1Hcbk6-IfNDWhRZz8tePP29mGw-Bc',
-    appId: '1:552170877326:ios:258140f8ea9ec3b15e74df',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env["firebaseIosKey"]!,
+    appId: dotenv.env["firebaseAppId"]!,
     messagingSenderId: '552170877326',
     projectId: 'traveler-town',
     storageBucket: 'traveler-town.appspot.com',
     iosBundleId: 'com.example.travelerTown',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCEGF1Hcbk6-IfNDWhRZz8tePP29mGw-Bc',
-    appId: '1:552170877326:ios:258140f8ea9ec3b15e74df',
+  static FirebaseOptions macos = FirebaseOptions(
+    apiKey: dotenv.env["firebaseMacKey"]!,
+    appId: dotenv.env["firebaseAppId"]!,
     messagingSenderId: '552170877326',
     projectId: 'traveler-town',
     storageBucket: 'traveler-town.appspot.com',
