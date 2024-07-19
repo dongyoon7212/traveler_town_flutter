@@ -11,8 +11,13 @@ class CountryInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text(countryModel.countryNameKor),
+    return const Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          // child: Image.network(),
+        )
+      ],
     );
   }
 }
