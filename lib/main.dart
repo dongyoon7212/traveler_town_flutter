@@ -6,7 +6,7 @@ import 'package:traveler_town/screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(); // 추가
+  await dotenv.load(fileName: 'assets/config/.env'); // 추가
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
