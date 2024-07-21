@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:traveler_town/models/country_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -44,12 +45,17 @@ class _CountryInfoScreenState extends State<CountryInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var format = NumberFormat('###,###,###,###');
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (_countryImgUrl != null)
           SizedBox(
             width: double.infinity,
-            child: Image.network(_countryImgUrl!),
+            child: Image.network(
+              _countryImgUrl!,
+            ),
           )
         else
           const SizedBox(
@@ -58,6 +64,62 @@ class _CountryInfoScreenState extends State<CountryInfoScreen> {
               child: Center(
                 child: CircularProgressIndicator(),
               )),
+        const SizedBox(
+          height: 20,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 30,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                widget.countryModel.countryNameKor,
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.favorite,
+                    size: 30,
+                    color: Colors.pink,
+                  ))
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 30,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.countryModel.capital),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Text("면적 : ${format.format(widget.countryModel.area)}km²"),
+                  widget.countryModel.areaExp != null
+                      ? Text(widget.countryModel.areaExp)
+                      : const Text(""),
+                ],
+              ),
+              Text("인구 : ${format.format(widget.countryModel.population)}명"),
+              Text("언어 : ${widget.countryModel.language}"),
+              widget.countryModel.people == null
+                  ? const Text("")
+                  : Text("민족 : ${widget.countryModel.people}"),
+              Text("종교 : ${widget.countryModel.religion}"),
+            ],
+          ),
+        )
       ],
     );
   }

@@ -4,7 +4,7 @@ import 'package:traveler_town/screens/country_info_screen.dart';
 import 'package:traveler_town/screens/mypage_screen.dart';
 import 'package:traveler_town/screens/signin_screen.dart';
 import 'package:traveler_town/services/auth_api_service.dart';
-import 'package:traveler_town/widgets/%08bottom_navigation_bar_widget.dart';
+import 'package:traveler_town/widgets/bottom_navigation_bar_widget.dart';
 import 'package:traveler_town/widgets/home_app_bar_widget.dart';
 import 'package:traveler_town/widgets/home_body_widget.dart';
 import 'package:traveler_town/screens/restaurant_screen.dart';
