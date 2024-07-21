@@ -85,9 +85,9 @@ class _CountryInfoScreenState extends State<CountryInfoScreen> {
               IconButton(
                   onPressed: () {},
                   icon: const Icon(
-                    Icons.favorite,
+                    Icons.bookmark,
                     size: 30,
-                    color: Colors.pink,
+                    color: Color.fromRGBO(22, 68, 113, 1),
                   ))
             ],
           ),
@@ -147,3 +147,10 @@ class _CountryInfoScreenState extends State<CountryInfoScreen> {
     );
   }
 }
+
+
+// 상세페이지 -> 마이페이지
+// 재검색
+// 상세페이지 나머지
+// 북마크 로직
+// 자동완성 클릭 로직
