@@ -99,24 +99,47 @@ class _CountryInfoScreenState extends State<CountryInfoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.countryModel.capital),
+              Text(
+                widget.countryModel.capital,
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                children: [
-                  Text("면적 : ${format.format(widget.countryModel.area)}km²"),
-                  widget.countryModel.areaExp != null
-                      ? Text(widget.countryModel.areaExp)
-                      : const Text(""),
-                ],
+              Text(
+                "면적 : ${format.format(widget.countryModel.area)}km²",
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
               ),
-              Text("인구 : ${format.format(widget.countryModel.population)}명"),
-              Text("언어 : ${widget.countryModel.language}"),
+              Text(
+                "인구 : ${format.format(widget.countryModel.population)}명",
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              Text(
+                "언어 : ${widget.countryModel.language}",
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
+              ),
               widget.countryModel.people == null
                   ? const Text("")
-                  : Text("민족 : ${widget.countryModel.people}"),
-              Text("종교 : ${widget.countryModel.religion}"),
+                  : Text(
+                      "민족 : ${widget.countryModel.people}",
+                      style: const TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+              Text(
+                "종교 : ${widget.countryModel.religion}",
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
+              ),
             ],
           ),
         )
