@@ -24,7 +24,8 @@ class CountryApiService {
     List<CountryModel> countryList = [];
     final headers = await getHeaders();
     final response = await http.get(
-      Uri.parse("http://localhost:8080/country/all"),
+      Uri.parse(
+          "http://ec2-3-36-22-124.ap-northeast-2.compute.amazonaws.com:8080/country/all"),
       headers: headers,
     );
 

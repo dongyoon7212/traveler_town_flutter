@@ -4,7 +4,8 @@ import 'package:traveler_town/models/board_model.dart';
 import 'package:traveler_town/services/auth_api_service.dart';
 
 class BoardApiService {
-  static const String baseUrl = "localhost:8080";
+  static const String baseUrl =
+      "ec2-3-36-22-124.ap-northeast-2.compute.amazonaws.com:8080";
 
   static Future<Map<String, String>> get requestHeaders async {
     final headers = await AuthApiService.getHeaders();
