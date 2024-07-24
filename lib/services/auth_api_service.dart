@@ -33,7 +33,7 @@ class AuthApiService {
 
   static Future<String> signin(String username, String password) async {
     final response = await http.post(
-      Uri.parse('http://localhost:8080/auth/signin'),
+      Uri.parse('http://ec2-3-36-22-124.ap-northeast-2.compute.amazonaws.com:8080/auth/signin'),
       headers: _baseHeaders,
       body: jsonEncode(<String, String>{
         'username': username,
@@ -62,7 +62,7 @@ class AuthApiService {
   static Future<PrincipalModel> getPrincipal() async {
     final headers = await getHeaders();
     final response = await http.get(
-      Uri.parse('http://localhost:8080/account/principal'),
+      Uri.parse('http://ec2-3-36-22-124.ap-northeast-2.compute.amazonaws.com:8080/account/principal'),
       headers: headers,
     );
     if (response.statusCode == 200) {
@@ -77,7 +77,7 @@ class AuthApiService {
   static editSex(int sex) async {
     final headers = await getHeaders();
     final response = await http.put(
-        Uri.parse("http://localhost:8080/account/sex"),
+        Uri.parse("http://ec2-3-36-22-124.ap-northeast-2.compute.amazonaws.com:8080/account/sex"),
         body: jsonEncode(<String, int>{"sex": sex}),
         headers: headers);
 
@@ -87,7 +87,7 @@ class AuthApiService {
   static editAge(int age) async {
     final headers = await getHeaders();
     final response = await http.put(
-        Uri.parse("http://localhost:8080/account/age"),
+        Uri.parse("http://ec2-3-36-22-124.ap-northeast-2.compute.amazonaws.com:8080/account/age"),
         body: jsonEncode(<String, int>{"age": age}),
         headers: headers);
 
